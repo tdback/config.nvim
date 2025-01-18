@@ -22,6 +22,9 @@ autocmd({ "BufWritePre" }, {
 -- Restore cursor's position in buffer from previous session.
 autocmd({ "BufReadPost" }, {
   callback = function(args)
+    if vim.bo.filetype == "gitcommit" then
+      return
+    end
     local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
     local count = vim.api.nvim_buf_line_count(args.buf)
     if mark[1] > 0 and mark[1] <= count then
